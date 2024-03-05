@@ -2,6 +2,15 @@ const express = require('express');
 const router = express.Router();
 const GiftList = require('../models/GiftList');
 
+router.get('/', async (req, res) => {
+    try {
+      const allLists = await GiftList.findAll();
+      res.json({ lists: allLists });
+    } catch (error) {
+      res.status(500).json({ message: 'Erreur lors de la récupération de toutes les listes', error: error.message });
+    }
+});
+
 // Ajout d'une liste
 router.post('/add-list', async (req, res) => {
   const newListData = req.body;

@@ -8,7 +8,7 @@ const port = 3000;
 
 app.use(bodyParser.json());
 
-app.use('/gift-lists', giftListRoutes);
+app.use('/', giftListRoutes);
 
 sequelize.sync().then(() => {
   app.listen(port, () => {
