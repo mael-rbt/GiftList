@@ -21,17 +21,8 @@ jobs:
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
       # Build and push Docker images for each service
-      - name: Build and Push API Service Image
+      - name: Build and Push giftlist project
         run: |
-          docker build -t  ${{ secrets.DOCKERHUB_USERNAME }}/api:latest ./api
-          docker push  ${{ secrets.DOCKERHUB_USERNAME }}/api:latest
+          docker build -t  ${{ secrets.DOCKERHUB_USERNAME }}/giftlist:latest ./giftlist
+          docker push  ${{ secrets.DOCKERHUB_USERNAME }}/giftlist:latest
 
-      - name: Build and Push Thread Service Image
-        run: |
-          docker build -t  ${{ secrets.DOCKERHUB_USERNAME }}/thread:latest ./thread_app
-          docker push  ${{ secrets.DOCKERHUB_USERNAME }}/thread:latest
-
-      - name: Build and Push Sender Service Image
-        run: |
-          docker build -t  ${{ secrets.DOCKERHUB_USERNAME }}/sender:latest ./sender_app
-          docker push  ${{ secrets.DOCKERHUB_USERNAME }}/sender:latest
