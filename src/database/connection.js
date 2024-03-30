@@ -22,5 +22,4 @@ syncModels();
 
 module.exports = {
   sequelize: sequelize,
-  syncModels: syncModels
 };

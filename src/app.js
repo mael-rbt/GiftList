@@ -5,6 +5,7 @@ const Item = require("./routes/item");
 const ListModel = require("./models/List.js");
 const ItemModel = require("./models/Item");
 const path = require("path");
+const ejs = require('ejs');
 
 const app = express();
 const port = 3000;
@@ -19,6 +20,7 @@ app.use(methodOverride("_method"));
 app.use("/list", List);
 app.use("/item", Item);
 
+app.engine('.ejs', ejs.__express);
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 
