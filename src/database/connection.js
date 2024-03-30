@@ -1,15 +1,50 @@
-const { Sequelize } = require('sequelize');
+// Importer Sequelize
+const { Sequelize, DataTypes } = require("sequelize");
 
-const sequelize = new Sequelize('giftlist', 'gift', 'Sab1XP7MgeRv3Tm', {
-  host: 'postgres',
-  dialect: 'postgres',
+// Initialiser Sequelize
+const sequelize = new Sequelize("lucie_giftlist", "lucie", "frite151", {
+  host: "185.193.17.146",
+  dialect: "mysql",
+});
+
+// Définir le modèle de la table Listes
+const List = sequelize.define("List", {
+  name: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+  birthday: {
+    type: DataTypes.DATE,
+    allowNull: false,
+  },
 });
 
 // Définir les associations entre les tables
-const ListModel = require('../models/List.js')(sequelize);
-const ItemModel = require('../models/Item.js')(sequelize);
+const Item = sequelize.define("Item", {
+  name: {
+    type: Sequelize.STRING,
+    allowNull: false,
+  },
+  price: {
+    type: Sequelize.FLOAT,
+    allowNull: false,
+  },
+  firstPrice: {
+    type: Sequelize.FLOAT,
+    allowNull: false,
+  },
+  booked: {
+    type: Sequelize.BOOLEAN,
+    allowNull: false,
+    defaultValue: false,
+  },
+});
 
-ListModel.hasMany(ItemModel);
-ItemModel.belongsTo(ListModel);
+List.hasMany(Item);
+Item.belongsTo(List);
 
-module.exports = sequelize;
+module.exports = {
+  List: List,
+  Item: Item,
+  sequelize: sequelize,
+};

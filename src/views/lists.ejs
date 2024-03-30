@@ -1,0 +1,44 @@
+<!-- lists.ejs -->
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Listes</title>
+    <style>
+      table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+      th,
+      td {
+        border: 1px solid black;
+        padding: 8px;
+        text-align: left;
+      }
+      th {
+        background-color: #f2f2f2;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Listes</h1>
+    <table>
+      <thead>
+        <tr>
+          <th>Nom de la liste</th>
+          <th>Date de création</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% lists.forEach(list => { %>
+        <tr>
+          <td><%= list.name %></td>
+          <td><%= list.createdAt %></td>
+        </tr>
+        <% }); %>
+      </tbody>
+    </table>
+  </body>
+</html>

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Listes</title>
+    <style>
+      table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+      th,
+      td {
+        border: 1px solid black;
+        padding: 8px;
+        text-align: left;
+      }
+      th {
+        background-color: #f2f2f2;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Liste</h1>
+    <h2><%= list.name %></h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Nom de l'item</th>
+          <th>Prix</th>
+          <th>Réservé</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% list.Items.forEach(item => { %>
+        <tr>
+          <td><%= item.name %></td>
+          <td><%= item.price %></td>
+          <td><%= item.booked ? 'Oui' : 'Non' %></td>
+        </tr>
+        <% }); %>
+      </tbody>
+    </table>
+  </body>
+</html>
