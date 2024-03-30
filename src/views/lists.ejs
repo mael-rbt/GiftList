@@ -1,5 +1,3 @@
-<!-- lists.ejs -->
-
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -21,6 +19,8 @@
         background-color: #f2f2f2;
       }
     </style>
+    <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css" rel="stylesheet">
   </head>
   <body>
     <h1>Listes</h1>
@@ -29,16 +29,48 @@
         <tr>
           <th>Nom de la liste</th>
           <th>Date de création</th>
+          <th>Action</th>
         </tr>
       </thead>
       <tbody>
         <% lists.forEach(list => { %>
         <tr>
-          <td><%= list.name %></td>
+          <td><a href="/list/<%= list.id %>"><%= list.name %></a></td>
           <td><%= list.createdAt %></td>
+          <td>
+            <form id="deleteForm<%= list.id %>" action="/list/<%= list.id %>" method="POST">
+              <input type="hidden" name="_method" value="DELETE">
+              <button type="button" onclick="deleteList(<%= list.id %>)">Supprimer</button>
+            </form>
+          </td>
         </tr>
         <% }); %>
       </tbody>
     </table>
+    <form action="/list" method="POST" id="addListForm">
+      <label for="name">Nom de la liste:</label>
+      <input type="text" id="name" name="name" required><br>
+      <label for="birthday">Date de naissance:</label>
+      <input type="date" id="birthday" name="birthday" required><br>
+      <button type="submit">Ajouter une liste</button>
+    </form>
+
+    <script>
+      const currentDate = new Date().toISOString().split('T')[0];
+      document.getElementById('birthday').value = currentDate;
+
+      async function deleteList(id) {
+        if (confirm("Êtes-vous sûr de vouloir supprimer cette liste ?")) {
+          try {
+            const response = await fetch("/list/" + id, {
+              method: "DELETE"
+            });
+            location.reload();
+          } catch (error) {
+            console.error(error);
+          }
+        }
+      }
+    </script>
   </body>
 </html>

@@ -21,14 +21,14 @@
     </style>
   </head>
   <body>
-    <h1>Liste</h1>
-    <h2><%= list.name %></h2>
+    <h1><a href="../list">Liste <%= list.name %></a></h1>
     <table>
       <thead>
         <tr>
           <th>Nom de l'item</th>
           <th>Prix</th>
           <th>Réservé</th>
+          <th>Actions</th> <!-- Nouvelle colonne pour les actions -->
         </tr>
       </thead>
       <tbody>
@@ -37,9 +37,27 @@
           <td><%= item.name %></td>
           <td><%= item.price %></td>
           <td><%= item.booked ? 'Oui' : 'Non' %></td>
+          <td>
+            <% if (!item.booked) { %> <!-- Afficher les actions uniquement si l'item n'est pas réservé -->
+              <form action="/item/<%= list.id %>/reserver" method="POST"> <!-- Formulaire pour réserver -->
+                <input type="hidden" name="itemId" value="<%= item.id %>">
+                <button type="submit">Réserver</button>
+              </form>
+              <form action="/item/<%= list.id %>/modifier-prix" method="POST"> <!-- Formulaire pour modifier le prix -->
+                <input type="hidden" name="itemId" value="<%= item.id %>">
+                <input type="number" name="price" placeholder="Nouveau prix">
+                <button type="submit">Modifier Prix</button>
+              </form>
+            <% } %>
+          </td>
         </tr>
         <% }); %>
       </tbody>
     </table>
+    <form action="/item/<%= list.id %>/ajouter-item" method="POST"> <!-- Formulaire pour ajouter un nouvel item -->
+      <input type="text" name="name" placeholder="Nom de l'item">
+      <input type="number" name="price" placeholder="Prix">
+      <button type="submit">Ajouter</button>
+    </form>
   </body>
 </html>

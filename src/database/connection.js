@@ -1,50 +1,26 @@
-// Importer Sequelize
-const { Sequelize, DataTypes } = require("sequelize");
+const { Sequelize } = require("sequelize");
 
-// Initialiser Sequelize
-const sequelize = new Sequelize("lucie_giftlist", "lucie", "frite151", {
-  host: "185.193.17.146",
-  dialect: "mysql",
+
+const sequelize = new Sequelize("giftlist", "gift", "Sab1XP7MgeRv3Tm", {
+  host: "postgres",
+  dialect: "postgres",
+  port: 5432
 });
 
-// Définir le modèle de la table Listes
-const List = sequelize.define("List", {
-  name: {
-    type: DataTypes.STRING,
-    allowNull: false,
-  },
-  birthday: {
-    type: DataTypes.DATE,
-    allowNull: false,
-  },
-});
 
-// Définir les associations entre les tables
-const Item = sequelize.define("Item", {
-  name: {
-    type: Sequelize.STRING,
-    allowNull: false,
-  },
-  price: {
-    type: Sequelize.FLOAT,
-    allowNull: false,
-  },
-  firstPrice: {
-    type: Sequelize.FLOAT,
-    allowNull: false,
-  },
-  booked: {
-    type: Sequelize.BOOLEAN,
-    allowNull: false,
-    defaultValue: false,
-  },
-});
 
-List.hasMany(Item);
-Item.belongsTo(List);
+async function syncModels() {
+  try {
+    await sequelize.sync();
+    console.log("Modèles synchronisés avec la base de données.");
+  } catch (error) {
+    console.error("Erreur lors de la synchronisation des modèles avec la base de données:", error);
+  }
+}
+
+syncModels();
 
 module.exports = {
-  List: List,
-  Item: Item,
   sequelize: sequelize,
+  syncModels: syncModels
 };

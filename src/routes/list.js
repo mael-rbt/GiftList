@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
-const { List, sequelize, Item } = require("../database/connection");
+const List = require("../models/List");
+const Item = require("../models/Item");
 
 // Route pour afficher toutes les lists
 router.get("/", async (req, res) => {
@@ -14,7 +15,7 @@ router.get("/", async (req, res) => {
   }
 });
 
-// Route pour afficher le détail d'une list
+// Route pour afficher le détail d"une list
 router.get("/:id", async (req, res) => {
   const { id } = req.params;
   try {
@@ -34,11 +35,11 @@ router.get("/:id", async (req, res) => {
 router.post("/", async (req, res) => {
   const { name, birthday } = req.body;
   try {
-    const nouvelleList = await List.create({ name, birthday });
-    res.status(201).json(nouvelleList);
+    await List.create({ name, birthday });
+    res.redirect("/list?addSuccess=true");
   } catch (err) {
     console.error(err);
-    res.status(500).json({ message: "Erreur serveur" });
+    res.status(500).send("Erreur serveur");
   }
 });
 
@@ -51,7 +52,7 @@ router.delete("/:id", async (req, res) => {
       return res.status(404).json({ message: "List non trouvée" });
     }
     await list.destroy();
-    res.json({ message: "List supprimée avec succès" });
+    res.redirect("/list?deleteSuccess=true");
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: "Erreur serveur" });

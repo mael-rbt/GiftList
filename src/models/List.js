@@ -1,19 +1,15 @@
-// Importer Sequelize
-const Sequelize = require("sequelize");
-// Définir le modèle de la table Listes
-const List = (sequelize) => {
-  const ListModel = sequelize.define("Lists", {
-    name: {
-      type: Sequelize.STRING,
-      allowNull: false,
-    },
-    birthday: {
-      type: Sequelize.DATE,
-      allowNull: false,
-    },
-  });
+const { sequelize } = require("../database/connection");
+const { DataTypes } = require("sequelize");
 
-  return ListModel;
-};
+const List = sequelize.define("List", {
+  name: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+  birthday: {
+    type: DataTypes.DATE,
+    allowNull: false,
+  },
+});
 
 module.exports = List;

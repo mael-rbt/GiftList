@@ -1,29 +1,24 @@
-// Importer Sequelize
-const Sequelize = require("sequelize");
+const { sequelize } = require("../database/connection");
+const { DataTypes } = require("sequelize");
 
-const sequelize = require("../database/connection.js");
+const Item = sequelize.define("Item", {
+  name: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+  price: {
+    type: DataTypes.FLOAT,
+    allowNull: false,
+  },
+  firstPrice: {
+    type: DataTypes.FLOAT,
+    allowNull: false,
+  },
+  booked: {
+    type: DataTypes.BOOLEAN,
+    allowNull: false,
+    defaultValue: false,
+  },
+});
 
-// Définir le modèle de la table Cadeaux
-module.exports = function (sequelize) {
-  const Item = sequelize.define("Items", {
-    name: {
-      type: Sequelize.STRING,
-      allowNull: false,
-    },
-    price: {
-      type: Sequelize.FLOAT,
-      allowNull: false,
-    },
-    firstPrice: {
-      type: Sequelize.FLOAT,
-      allowNull: false,
-    },
-    booked: {
-      type: Sequelize.BOOLEAN,
-      allowNull: false,
-      defaultValue: false,
-    },
-  });
-
-  return Item;
-};
+module.exports = Item;

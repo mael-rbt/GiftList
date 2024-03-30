@@ -1,14 +1,20 @@
 const express = require("express");
-const bodyParser = require("body-parser");
-const sequelize = require("./database/connection");
+const methodOverride = require("method-override");
 const List = require("./routes/list");
 const Item = require("./routes/item");
+const ListModel = require("./models/List.js");
+const ItemModel = require("./models/Item");
 const path = require("path");
 
 const app = express();
 const port = 3000;
 
-app.use(bodyParser.json());
+ListModel.hasMany(ItemModel);
+ItemModel.belongsTo(ListModel);
+
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(methodOverride("_method"));
 
 app.use("/list", List);
 app.use("/item", Item);

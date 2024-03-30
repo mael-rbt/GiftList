@@ -11,6 +11,9 @@
     "quotes": ["error", "double"],
     "semi": ["error", "always"],
     "no-console": "warn",
-    "no-unused-vars": "error"
+    "no-unused-vars": "error",
+    "no-eval": "error",
+    "no-new-func": "error",
+    "no-use-before-define": "error"
   }
 }
